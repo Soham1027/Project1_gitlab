@@ -1,0 +1,121 @@
+# def get_user_by_name(db: Session, classname: str):
+#     return db.query(models.Data).filter(models.Data.classname == classname).first()
+
+
+# def get_users(db: Session, skip: int = 0, limit: int = 100):
+#     return db.query(models.Data).offset(skip).limit(limit).all()
+
+
+# def create_user(db: Session, name:str):
+#     db_user = models.Data(name=name)
+#     db.add(db_user)
+#     db.commit()
+#     return db_user
+    
+
+@router.post("/register/", response_model=schemas.User,tags=['Users'])
+def create_user(users: schemas.UserCreate, db: Session = Depends(dependencies.get_db)):
+      return service_users.create_new_user(db,lists,listdata_id)
+
+auth_route:
+
+# @router.post("/login/", response_model=dict, tags=['Auth'])
+# def user_login(credentials: schemas.UserLogin, db: Session = Depends(dependencies.get_db)):
+#     user_info = service_auth.login(db, credentials)
+
+#     if user_info:
+#         return user_info
+#     else:
+#         raise HTTPException(status_code=400, detail="Invalid credentials")
+    
+    
+# @router.post("/forgot-password/", tags=['Auth'])
+# def forgot_password(request: schemas.ForgotPassword, db: Session = Depends(dependencies.get_db)):
+#     reset_token = service_auth.generate_reset_token(db, request.email)
+
+#     if reset_token:
+#         # TODO: Send the reset_token to the user's email (using your email service)
+#         # Example: email_service.send_reset_email(request.email, reset_token)
+#         return {"detail": "Reset token sent to your email"}
+
+#     raise HTTPException(status_code=400, detail="User not found")
+
+
+utils.py:
+def create_reset_token() -> str:
+    to_encode = {"exp": datetime.utcnow() + timedelta(minutes=ACCESS_TOKEN_EXPIRE_MINUTES)}
+    return jwt.encode(to_encode, JWT_SECRET_KEY, algorithm="HS256")
+
+
+service_auth:
+
+# def login(db: Session, credentials: schemas.UserLogin):
+#     user = db.query(AuthData).filter_by(email=credentials.email).first()
+
+#     if user and verify_password(credentials.password, user.password): # type: ignore
+#         token = create_jwt_token(user.email) # type: ignore
+#         return {"user": user, "token": token}
+#     else:
+#         return None
+    
+# def generate_reset_token(db: Session, email: str):
+#     user = db.query(AuthData).filter_by(email=email).first()
+
+#     if user:
+#         reset_token = create_reset_token()
+#         user.reset_token = reset_token # type: ignore
+#         db.commit()
+#         return reset_token
+#     else:
+#         return None
+
+# def verify_reset_token(db: Session, email: str, reset_token: str):
+#     user = db.query(AuthData).filter_by(email=email, reset_token=reset_token).first()
+
+#     if user:
+#         return True
+#     else:
+#         return False
+
+
+
+
+
+email
+
+# from fastapi_mail import ConnectionConfig
+# conf = ConnectionConfig(
+#     MAIL_USERNAME = "SohamGhayal",
+#     MAIL_PASSWORD = "yjbhzsworfzgcbco",
+#     MAIL_FROM = "sohamghayal02@gmail.com",
+#     MAIL_PORT = 587,
+#     MAIL_SERVER = "mail server",
+#     MAIL_FROM_NAME="Desired Name",
+#     MAIL_STARTTLS = True,
+#     MAIL_SSL_TLS = False,
+#     USE_CREDENTIALS = True,
+#     VALIDATE_CERTS = True
+# )
+
+
+email route:
+
+
+# @router.post("/email/",tags=['Auth'])
+# async def simple_send(email: schemas.EmailSchema):
+#     user=await db["datas"].find_one({"email":email.email})
+    
+#     if user is None:
+        
+#     html = """<p>Hi this test mail, thanks for using Fastapi-mail</p> """
+
+#     message = MessageSchema(
+#         subject="Fastapi-Mail module",
+#         recipients=email.dict().get("email"), # type: ignore
+#         body=html,
+#         subtype=MessageType.html)
+
+#     fm = FastMail(conf)
+#     await fm.send_message(message)
+#     return JSONResponse(status_code=200, content={"message": "email has been sent"})
+
